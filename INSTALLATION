@@ -1,0 +1,36 @@
+========================================================================================================
+sudo fdisk -l
+Disk /dev/sdb: 14.86 GiB, 15931539456 bytes, 31116288 sectors
+Disk model: SD MMC Reader   
+Units: sectors of 1 * 512 = 512 bytes
+Sector size (logical/physical): 512 bytes / 512 bytes
+I/O size (minimum/optimal): 512 bytes / 512 bytes
+Disklabel type: dos
+Disk identifier: 0x082870b9
+Device     Boot Start      End  Sectors  Size Id Type
+/dev/sdb1        8192 30805119 30796928 14.7G 83 Linux
+
+
+**** CHECK ALL THE FOLDERS FOR UNWANTED FILES ****
+**** /home/qdnet/production/ictnumber file value : ICT00 ****
+sudo dd if=/dev/sdb of=/home/lenny/Projects/ICT_POLE_PROJECT/IMAGE/OrangePI_Pole_SnapShot.img
+
+==========================================================================================================
+# Ethernet adapter 0
+allow-hotplug eth0
+iface eth0 inet static
+address 192.168.1.249
+netmask 255.255.255.0
+==========================================================================================================
+sudo nano /etc/systemd/timesyncd.conf  
+[Time]
+NTP=time.google.com
+FallbackNTP=ur.fallbackntp.srv
+
+rm /lib/systemd/system/systemd-timesyncd.service.d/disable-with-time-daemon.conf
+
+sudo systemctl daemon-reload
+sudo timedatectl set-ntp off
+sudo timedatectl set-ntp on
+timedatectl status
+==========================================================================================================
